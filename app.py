@@ -4,6 +4,18 @@ import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
+import os
+if not os.path.exists('artifacts/model.pkl'):
+    from src.components.data_ingestion import DataIngestion
+    from src.components.data_transformation import DataTransformation
+    from src.components.model_trainer import ModelTrainer
+    
+    obj = DataIngestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+    data_transformation = DataTransformation()
+    train_arr, test_arr, _ = data_transformation.initiate_data_transformation(train_data, test_data)
+    model_trainer = ModelTrainer()
+    model_trainer.initiate_model_trainer(train_arr, test_arr)
 
 application=Flask(__name__)
 
