@@ -4,6 +4,7 @@ import pandas as pd
 
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import CustomData,PredictPipeline
+from flask import Flask, request, render_template, redirect
 import os
 if not os.path.exists('artifacts/model.pkl'):
     from src.components.data_ingestion import DataIngestion
@@ -25,7 +26,7 @@ app=application
 
 @app.route('/')
 def index():
-    return render_template('index.html') 
+    return redirect('/predictdata')
 
 @app.route('/predictdata',methods=['GET','POST'])
 def predict_datapoint():
